@@ -34,7 +34,7 @@ export function ContactSection() {
               <div className="relative inline-flex">
                 <div className="absolute inset-0 animate-pulse-glow rounded-full bg-yellow-400/20 blur-2xl" />
                 <a
-                  href="mailto:jstembotix@gmail.com?subject=Workshop%20Inquiry"
+                  href="mailto:robotecheducation1@gmail.com?subject=Workshop%20Inquiry"
                   className="relative flex items-center gap-4 rounded-2xl bg-gradient-to-br from-yellow-400/10 to-amber-500/5 p-5 transition-all hover:glow-yellow"
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg">
@@ -61,7 +61,7 @@ export function ContactSection() {
                 size="lg"
                 onClick={() =>
                   window.open(
-                    'mailto:jstembotix@gmail.com?subject=Workshop%20Inquiry',
+                    'mailto:robotecheducation1@gmail.com?subject=Workshop%20Inquiry',
                     '_blank'
                   )
                 }
