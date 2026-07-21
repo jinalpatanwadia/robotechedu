@@ -14,6 +14,8 @@ export default function TrainerRegistrationForm() {
     salary: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -23,19 +25,60 @@ export default function TrainerRegistrationForm() {
     });
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/trainer-registration", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Application submitted successfully!");
+
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          qualification: "",
+          experience: "",
+          skills: "",
+          availability: "Full Time",
+          salary: "",
+        });
+      } else {
+        alert(result.error || "Failed to submit application.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
       <h2 className="text-3xl font-bold text-center mb-6">
         ATL Trainer Registration
       </h2>
 
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           name="name"
           placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
@@ -45,6 +88,7 @@ export default function TrainerRegistrationForm() {
           placeholder="Phone Number"
           value={formData.phone}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
@@ -54,6 +98,7 @@ export default function TrainerRegistrationForm() {
           placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
@@ -63,6 +108,7 @@ export default function TrainerRegistrationForm() {
           placeholder="Qualification"
           value={formData.qualification}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
@@ -72,15 +118,17 @@ export default function TrainerRegistrationForm() {
           placeholder="Experience"
           value={formData.experience}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
         <input
           type="text"
           name="skills"
-          placeholder="Skills (Arduino, Robotics, AI...)"
+          placeholder="Skills (Arduino, Robotics, AI, Python...)"
           value={formData.skills}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
@@ -90,8 +138,8 @@ export default function TrainerRegistrationForm() {
           onChange={handleChange}
           className="w-full border rounded-lg p-3"
         >
-          <option>Full Time</option>
-          <option>Part Time</option>
+          <option value="Full Time">Full Time</option>
+          <option value="Part Time">Part Time</option>
         </select>
 
         <input
@@ -100,14 +148,16 @@ export default function TrainerRegistrationForm() {
           placeholder="Expected Salary"
           value={formData.salary}
           onChange={handleChange}
+          required
           className="w-full border rounded-lg p-3"
         />
 
         <button
           type="submit"
-          className="w-full bg-yellow-500 text-black font-bold py-3 rounded-lg"
+          disabled={loading}
+          className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 rounded-lg transition disabled:opacity-50"
         >
-          Apply Now
+          {loading ? "Submitting..." : "Apply Now"}
         </button>
       </form>
     </div>
