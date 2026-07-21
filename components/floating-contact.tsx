@@ -19,10 +19,10 @@ export function FloatingContact() {
           >
             <Mail className="h-5 w-5 text-yellow-500" />
             <a
-              href="mailto:jstembotix@gmail.com?subject=Workshop%20Inquiry"
+              href="mailto:robotecheducation1@gmail.com?subject=Workshop%20Inquiry"
               className="text-sm font-medium hover:text-yellow-500"
             >
-              jstembotix@gmail.com
+              robotecheducation1@gmail.com
             </a>
           </motion.div>
         )}
