@@ -19,40 +19,26 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
 
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setMobileOpen(false);
-      }
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 30);
 
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
 
-    const element = document.querySelector(href);
+    const el = document.querySelector(href);
 
-    if (element) {
-      element.scrollIntoView({
+    if (el) {
+      el.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
       });
     }
   };
@@ -63,9 +49,9 @@ export function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed inset-x-0 top-0 z-[9999]',
         scrolled
-          ? 'glass border-b border-border/40 py-3 shadow-md'
+          ? 'glass border-b border-border/40 py-3'
           : 'bg-transparent py-5'
       )}
     >
@@ -73,11 +59,10 @@ export function Navbar() {
 
         {/* Logo */}
         <button
-          type="button"
           onClick={() => handleNavClick('#home')}
           className="flex items-center gap-2"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500">
             <Cpu className="h-5 w-5 text-zinc-900" />
           </div>
 
@@ -86,14 +71,13 @@ export function Navbar() {
           </span>
         </button>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-2">
+        {/* Desktop Menu */}
+        <div className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => (
             <button
               key={link.href}
-              type="button"
               onClick={() => handleNavClick(link.href)}
-              className="rounded-lg px-4 py-2 text-sm font-medium hover:text-yellow-500 transition"
+              className="rounded-lg px-4 py-2 text-sm hover:text-yellow-500"
             >
               {link.label}
             </button>
@@ -107,7 +91,6 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              type="button"
               onClick={() =>
                 setTheme(theme === 'dark' ? 'light' : 'dark')
               }
@@ -121,16 +104,13 @@ export function Navbar() {
           )}
 
           <Button
-            type="button"
             onClick={() => handleNavClick('#book')}
-            className="hidden sm:flex bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-900 hover:from-yellow-500 hover:to-amber-600"
+            className="hidden sm:flex bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-900"
           >
             Book Workshop
           </Button>
 
-          {/* Mobile Menu Button */}
           <Button
-            type="button"
             variant="ghost"
             size="icon"
             className="lg:hidden"
@@ -142,7 +122,6 @@ export function Navbar() {
               <Menu className="h-6 w-6" />
             )}
           </Button>
-
         </div>
       </div>
 
@@ -150,29 +129,27 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="lg:hidden overflow-hidden"
+            className="absolute left-0 top-full z-[9999] w-full bg-background border-t border-border shadow-2xl lg:hidden"
           >
-            <div className="mx-4 mt-3 rounded-2xl glass-card p-4 shadow-xl">
+            <div className="space-y-2 p-5">
 
               {navLinks.map((link) => (
                 <button
                   key={link.href}
-                  type="button"
                   onClick={() => handleNavClick(link.href)}
-                  className="block w-full rounded-lg px-4 py-3 text-left hover:bg-accent/10"
+                  className="block w-full rounded-lg px-4 py-3 text-left font-medium hover:bg-muted"
                 >
                   {link.label}
                 </button>
               ))}
 
               <Button
-                type="button"
                 onClick={() => handleNavClick('#book')}
-                className="mt-3 w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-900"
+                className="mt-4 w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-900"
               >
                 Book Workshop
               </Button>
