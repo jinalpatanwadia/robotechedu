@@ -57,19 +57,17 @@ export function ContactSection() {
 
             {/* Right - buttons */}
             <div className="flex flex-col gap-4">
-              <Button
-                size="lg"
-                onClick={() =>
-                  window.open(
-                    'mailto:robotecheducation1@gmail.com?subject=Workshop%20Inquiry',
-                    '_blank'
-                  )
-                }
-                className="bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-900 hover:from-yellow-500 hover:to-amber-600"
-              >
-                <Send className="mr-2 h-5 w-5" />
-                Send Email
-              </Button>
+             <Button
+  size="lg"
+  onClick={() =>
+    window.location.href =
+      "mailto:robotecheducation1@gmail.com?subject=Workshop%20Inquiry&body=Hello%20Robotech%20Education,%0A%0AI%20would%20like%20to%20know%20more%20about%20your%20services.%0A%0AName:%20%0ASchool/College:%20%0APhone:%20"
+  }
+  className="bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-900 hover:from-yellow-500 hover:to-amber-600"
+>
+  <Send className="mr-2 h-5 w-5" />
+  Send Email
+</Button>
               <Button
                 size="lg"
                 variant="outline"
