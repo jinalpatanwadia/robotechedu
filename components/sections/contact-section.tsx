@@ -43,7 +43,7 @@ export function ContactSection() {
                   <div>
                     <p className="text-sm text-muted-foreground">Email us at</p>
                     <p className="font-display text-lg font-bold">
-                      jstembotix@gmail.com
+                      robotecheducation1@gmail.com
                     </p>
                   </div>
                 </a>
